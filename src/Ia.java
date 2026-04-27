@@ -3,12 +3,29 @@ import java.util.Random;
 public class Ia {
 
     private Random random;
+    private int niveau;
 
-    public Ia() {
+    public Ia(int niveau) {
         this.random = new Random();
+        this.niveau = niveau; // Niveau spécifié
     }
 
     public Couple chercheCoup(Plateau p) {
+        switch (niveau) {
+            case 0: // Facile
+                return CoupRandom(p);
+            case 1: // Moyen
+                // Pour l'instant, on retourne un coup aléatoire pour le niveau moyen
+                return CoupRandom(p);
+            case 2: // Difficile
+                // Pour l'instant, on retourne un coup aléatoire pour le niveau difficile
+                return CoupRandom(p);
+            default:
+                return CoupRandom(p);
+        }
+    }
+
+    private Couple CoupRandom(Plateau p){
         Couple c = null;
         if (p == null) {
             return new Couple(0, 0); // Retourne un coup par défaut si le plateau est null
@@ -20,21 +37,13 @@ public class Ia {
         for(int i = 0; i < p.nLignes; i++) {
             if(compteur + p.plateau[i] > choix) {
                 int j = choix - compteur;
-                c = new Couple(i, j);
-                break;
+                return new Couple(i, j);
             }
             compteur += p.plateau[i];
         }
 
-        /*
-        try {
-            Thread.sleep(500); // petite attente pour éviter que l'IA joue instantanément
-        } catch (InterruptedException e) {
-            System.out.println("erreur dans le sleep" + e.getMessage());
-        }
-        */
+        return c;//sensé jamais arriver
 
-        return c;
     }
 
 }
